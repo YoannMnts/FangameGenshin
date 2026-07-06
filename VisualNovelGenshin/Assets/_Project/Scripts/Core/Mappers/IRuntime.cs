@@ -1,4 +1,4 @@
-﻿namespace Project.Gameplay.Scripts
+﻿namespace Project.Core.Scripts.Mappers
 {
     public interface IRuntime
     {

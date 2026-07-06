@@ -1,12 +1,11 @@
 ﻿using Project.Core.Scripts.Datas;
-using Project.Gameplay.Scripts;
 
 namespace Project.Core.Scripts.Mappers
 {
-    public abstract class Mapper<TData, TRuntime> 
+    public interface IMapper<in TData, out TRuntime> 
         where TData : IData 
         where TRuntime : IRuntime
-    {
-        public abstract TRuntime Map(TData data);
+    { 
+        TRuntime Map(TData data);
     }
 }

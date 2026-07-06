@@ -1,18 +1,15 @@
-﻿using Project.Gameplay.Scripts.Choices;
-using Project.Gameplay.Scripts.Dialogues;
+﻿using Project.Core.Scripts.Mappers;
+using Project.Gameplay.Scripts.Roads.Days;
 
 namespace Project.Gameplay.Scripts.Roads
 {
     public class Road : IRuntime
     {
-        public readonly Dialogue[] dialogues;
-        public readonly Choice[] choices;
-        public Dialogue CurrentDialogue { get; private set; } 
-        public Road(Dialogue[] dialogues, Choice[] choices)
+        public readonly Day[] days;
+
+        public Road(Day[] days)
         {
-            this.dialogues = dialogues;
-            this.choices = choices;
-            CurrentDialogue = dialogues[0];
+            this.days = days;
         }
     }
 }

@@ -1,8 +1,8 @@
 ﻿using Helteix.Tools.UI;
 
-namespace Project.Gameplay.Scripts.Dialogues.UIs
+namespace Project.Gameplay.Scripts.Talks.UIs
 {
-    public class DialogueUI : UIItem<string>
+    public class TalkUI : UIItem<string>
     {
         protected override void SyncUI(string current)
         {

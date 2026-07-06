@@ -1,12 +1,19 @@
-﻿namespace Project.Gameplay.Scripts.Dialogues
+﻿using Project.Core.Scripts.Mappers;
+using Project.Gameplay.Scripts.Choices;
+using Project.Gameplay.Scripts.Talks;
+
+namespace Project.Gameplay.Scripts.Dialogues
 {
     public class Dialogue : IRuntime
     {
-        public string Text { get; private set; }
-        
-        public Dialogue(string text)
-        { 
-            Text = text;
+        public readonly Talk[] dialogues;
+        public readonly Choice[] choices;
+        public Talk CurrentTalk { get; private set; } 
+        public Dialogue(Talk[] dialogues, Choice[] choices)
+        {
+            this.dialogues = dialogues;
+            this.choices = choices;
+            CurrentTalk = dialogues[0];
         }
     }
 }

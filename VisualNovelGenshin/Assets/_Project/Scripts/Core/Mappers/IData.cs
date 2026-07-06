@@ -1,7 +1,6 @@
-﻿namespace Project.Core.Scripts.Datas
+﻿namespace Project.Core.Scripts.Mappers
 {
     public interface IData
     {
-        
     }
 }

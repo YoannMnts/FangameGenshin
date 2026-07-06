@@ -1,12 +1,16 @@
-﻿using UnityEngine;
+﻿using Project.Core.Scripts.Mappers;
+using Sirenix.OdinInspector;
+using UnityEngine;
 
 namespace Project.Core.Scripts.Datas
 {
     [CreateAssetMenu(fileName = "Dialogue", menuName = "Datas/Dialogue")]
-    public class DialogueData : MapData
+    public class DialogueData : ScriptableData, IData
     {
         [field: SerializeField]
-        [TextArea]
-        public string Text { get; private set; }
+        public TalkData[] Talks { get; private set; }
+        
+        [field: SerializeField]
+        public ChoiceData[] Choices { get; private set; }
     }
 }

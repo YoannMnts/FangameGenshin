@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Project.Core.Scripts.Datas
 {
-    [CreateAssetMenu(fileName = "Choice", menuName = "Datas/Choice")]
-    public class ChoiceData : MapData
+    [Serializable]
+    public class ChoiceData
     {
         [field: SerializeField]
         [TextArea] 

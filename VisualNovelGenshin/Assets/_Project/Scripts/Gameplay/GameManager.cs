@@ -1,23 +1,26 @@
 ﻿using System;
 using System.Threading;
 using Helteix.Tools.Phases;
+using Project.Gameplay.Scripts.Mappers;
 using Project.Gameplay.Scripts.Roads;
 using UnityEngine;
 
 namespace Project.Gameplay.Scripts
 {
-    public class GameManager
+    public class GameManager : MonoBehaviour
     {
-        private readonly RoadLoader loader = new();
-        private Road currentRoad;
-        
+        private readonly RoadLoader roadLoader = new();
         private CancellationToken ct;
+
+        [Header("Debug")] 
+        [SerializeField] 
+        private string GUID;
 
         private async void Start()
         {
             try
             {
-                await LoadRoad("Roads/Route1");
+                await LaunchRoad("Dialogues/Dialogue1");
             }
             catch (Exception e)
             {
@@ -25,18 +28,18 @@ namespace Project.Gameplay.Scripts
             }
         }
 
-        private async Awaitable LoadRoad(string key)
+        private async Awaitable LaunchRoad(string key)
         {
-            currentRoad = await loader.LoadAsync(key, ct);
+            var road = await roadLoader.LoadAsync(key, ct);
 
-            if (currentRoad == null)
+            if (road == null)
             {
                 Debug.LogError($"Failed to load road: {key}");
                 return;
             }
 
-            var roadPhase = new RoadPhase(currentRoad);
-            roadPhase.RunAndForget();
+            var dialoguePhase = new RoadPhase(road);
+            dialoguePhase.RunAndForget();
         }
     }
 }

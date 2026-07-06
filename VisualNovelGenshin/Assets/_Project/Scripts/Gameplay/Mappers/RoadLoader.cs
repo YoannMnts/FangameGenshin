@@ -1,19 +1,19 @@
 ﻿using System.Threading;
 using Project.Core.Scripts.Datas;
-using Project.Core.Scripts.Managers;
+using Project.Core.Scripts.Mappers;
+using Project.Gameplay.Scripts.Roads;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
-namespace Project.Gameplay.Scripts.Roads
+namespace Project.Gameplay.Scripts.Mappers
 {
-    public class RoadLoader
+    public class RoadLoader : ILoader<RoadData, Road>
     {
-        private readonly RoadMapper roadMapper = new();
-
+        private readonly RoadMapper mapper = new RoadMapper();
         public async Awaitable<Road> LoadAsync(string key, CancellationToken ct)
         {
-            var handle = Addressables.LoadAssetAsync<RoadDataBase>(key);
+            var handle = Addressables.LoadAssetAsync<RoadData>(key);
 
             await handle.Task;
     
@@ -22,11 +22,11 @@ namespace Project.Gameplay.Scripts.Roads
             if (handle.Status != AsyncOperationStatus.Succeeded)
             {
                 Addressables.Release(handle);
-                Debug.LogError($"Failed to load road: {key}");
+                Debug.LogError($"Failed to load dialogue: {key}");
                 return null;
             }
 
-            var runtime = roadMapper.Map(handle.Result);
+            var runtime = await mapper.MapAsync(handle.Result, ct);
             Addressables.Release(handle);
 
             return runtime;

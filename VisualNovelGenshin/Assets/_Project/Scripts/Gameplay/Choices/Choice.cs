@@ -1,4 +1,6 @@
-﻿namespace Project.Gameplay.Scripts.Choices
+﻿using Project.Core.Scripts.Mappers;
+
+namespace Project.Gameplay.Scripts.Choices
 {
     public class Choice : IRuntime
     {
