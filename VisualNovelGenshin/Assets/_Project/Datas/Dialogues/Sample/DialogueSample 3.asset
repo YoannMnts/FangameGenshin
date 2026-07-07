@@ -12,9 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de66a4141afd45918a54c3a732b4f843, type: 3}
   m_Name: DialogueSample 3
   m_EditorClassIdentifier: Project.Core::Project.Core.Scripts.Datas.DialogueData
-  guidText: b7c00638-da30-42c1-be8f-7cb202c5b011
-  <Talks>k__BackingField:
-  - <Text>k__BackingField: 
-  <Choices>k__BackingField:
-  - <Text>k__BackingField: 
-    <NextDialogue>k__BackingField: {fileID: 0}
+  guidText: 6a4455ea-e2c8-4cd7-b717-ba94fc8bbd4e
+  <Talks>k__BackingField: []
+  <Choices>k__BackingField: []

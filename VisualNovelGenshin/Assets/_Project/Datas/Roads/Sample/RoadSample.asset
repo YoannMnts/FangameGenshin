@@ -13,6 +13,5 @@ MonoBehaviour:
   m_Name: RoadSample
   m_EditorClassIdentifier: Project.Core::Project.Core.Scripts.Datas.RoadData
   guidText: d79618b7-f9b2-4743-a7e3-bf5f6b1bc522
-  <Days>k__BackingField:
-  - <Dialogues>k__BackingField:
-    - {fileID: 0}
+  <DaysFirstDialogue>k__BackingField:
+  - {fileID: 11400000, guid: 33a56cc6641c048488691872a2437a02, type: 2}

@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using Helteix.Tools.Phases;
 using Project.Gameplay.Scripts.Choices;
 using Project.Gameplay.Scripts.Talks;
@@ -6,36 +7,36 @@ using UnityEngine;
 
 namespace Project.Gameplay.Scripts.Dialogues
 {
-    public class DialoguePhase : IPhase<bool>
+    public class DialoguePhase : IPhase<Guid>
     {
-        private readonly Dialogue dialogue;
+        public Dialogue Dialogue { get; private set; }
 
         public DialoguePhase(Dialogue dialogue)
         {
-            this.dialogue = dialogue;
+            Dialogue = dialogue;
         }
 
-        async Awaitable<bool> IPhase<bool>.Execute(CancellationToken token)
+        async Awaitable<Guid> IPhase<Guid>.Execute(CancellationToken token)
         {
-            for (int i = 0; i < dialogue.dialogues.Length; i++)
+            for (int i = 0; i < Dialogue.dialogues.Length; i++)
             {
-                var dialogue = this.dialogue.dialogues[i];
-                var dialoguePhase = new TalkPhase(dialogue);
+                var talk = Dialogue.dialogues[i];
+                var dialoguePhase = new TalkPhase(talk);
                 await dialoguePhase.Run();
             }
 
-            var choosePhase = new ChoosePhase(dialogue.choices);
-            await choosePhase.Run();
+            var choosePhase = new ChoosePhase(Dialogue.choices);
+            var nextDialogue = await choosePhase.Run();
             
-            return true;
+            return nextDialogue.value;
         }
 
-        async Awaitable IPhase<bool>.Initialize(CancellationToken token)
+        async Awaitable IPhase<Guid>.Initialize(CancellationToken token)
         {
             await Awaitable.MainThreadAsync();
         }
 
-        async Awaitable IPhase<bool>.Dispose(CancellationToken token)
+        async Awaitable IPhase<Guid>.Dispose(CancellationToken token)
         {
             await Awaitable.MainThreadAsync();
         }

@@ -10,7 +10,7 @@ namespace Project.Gameplay.Scripts
 {
     public class GameManager : MonoBehaviour
     {
-        private readonly RoadLoader roadLoader = new();
+        private readonly Loader<RoadData, Road> roadLoader = new();
         private CancellationToken ct;
 
         [Header("Debug")] 
@@ -31,7 +31,7 @@ namespace Project.Gameplay.Scripts
 
         private async Awaitable LaunchRoad(string key)
         {
-            var road = await roadLoader.LoadAsync(key, ct);
+            var road = await roadLoader.LoadAsync<RoadMapper>(key, ct);
 
             if (road == null)
             {

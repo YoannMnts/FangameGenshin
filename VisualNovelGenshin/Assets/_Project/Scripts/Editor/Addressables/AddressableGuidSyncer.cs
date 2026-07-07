@@ -4,7 +4,7 @@ using UnityEditor.AddressableAssets;
 using UnityEditor.AddressableAssets.Settings;
 using UnityEngine;
 
-namespace Project.Core.Scripts.Addressables
+namespace Project.Editor._Project.Scripts.Editor.Addressables
 { 
     public static class AddressableGuidSyncer
     {
