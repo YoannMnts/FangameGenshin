@@ -3,33 +3,24 @@ using Project.Core.Scripts.Datas;
 using Project.Core.Scripts.Mappers;
 using Project.Gameplay.Scripts.Dialogues;
 using Project.Gameplay.Scripts.Roads;
-using Project.Gameplay.Scripts.Roads.Days;
 using UnityEngine;
 
 namespace Project.Gameplay.Scripts.Mappers
 {
-    public class RoadMapper : IAsyncMapper<RoadData, Road>
+    public class RoadMapper : IMapper<RoadData, Road>
     {
         private readonly DialogueLoader dialogueLoader = new ();
         
-        public async Awaitable<Road> MapAsync(RoadData data, CancellationToken ct)
+        public async Awaitable<Road> Map(RoadData data, CancellationToken ct)
         {
-            var days = new Day[data.Days.Length];
+            var dialogues = new Dialogue[data.DaysFirstDialogue.Length];
             
-            for (int i = 0; i < data.Days.Length; i++)
+            for (int i = 0; i < data.DaysFirstDialogue.Length; i++)
             {
-                var dayData = data.Days[i];
-                var dialogues = new Dialogue[dayData.Dialogues.Length];
-                
-                for (int j = 0; j < dayData.Dialogues.Length; j++)
-                {
-                    dialogues[j] = await dialogueLoader.LoadAsync(dayData.Dialogues[j].ID.ToString(), ct);
-                }
-                
-                days[i] = new Day(dialogues);
+                dialogues[i] = await dialogueLoader.LoadAsync(data.DaysFirstDialogue[i].ID.ToString(), ct);
             }
             
-            return new Road(days);
+            return new Road(dialogues);
         }
     }
 }

@@ -1,50 +1,47 @@
-﻿#if UNITY_EDITOR
-using Project.Core.Scripts.Datas;
+﻿using Project.Core.Scripts.Datas;
 using UnityEditor;
 using UnityEditor.AddressableAssets;
 using UnityEditor.AddressableAssets.Settings;
+using UnityEngine;
 
 namespace Project.Core.Scripts.Addressables
-{
-
+{ 
     public static class AddressableGuidSyncer
     {
-        [InitializeOnLoadMethod]
-        private static void Initialize()
-        {
-            ObjectChangeEvents.changesPublished += OnChangesPublished;
-        }
-
-        private static void OnChangesPublished(ref ObjectChangeEventStream stream)
-        {
-            for (int i = 0; i < stream.length; i++)
-            {
-                if (stream.GetEventType(i) != ObjectChangeKind.ChangeAssetObjectProperties)
-                    continue;
-
-                stream.GetChangeAssetObjectPropertiesEvent(i, out var e);
-                var asset = EditorUtility.EntityIdToObject(e.entityId); 
-                
-                if (asset is ScriptableData scriptableData)
-                    SyncGuid(scriptableData);
-            }
-        }
-
-        private static void SyncGuid(ScriptableData data)
+        [MenuItem("Tools/Sync Addressable GUIDs")]
+        public static void SyncAll()
         {
             var settings = AddressableAssetSettingsDefaultObject.Settings;
-            if (settings == null) return;
+            if (settings == null)
+            {
+                Debug.LogError("No Addressable Settings found.");
+                return;
+            }
 
-            var assetPath = AssetDatabase.GetAssetPath(data);
-            var assetGuid = AssetDatabase.AssetPathToGUID(assetPath);
-            var entry = settings.FindAssetEntry(assetGuid);
+            var guids = AssetDatabase.FindAssets($"t:{nameof(ScriptableData)}");
+            int synced = 0;
 
-            if (entry == null) return;
+            foreach (var assetGuid in guids)
+            {
+                var path = AssetDatabase.GUIDToAssetPath(assetGuid);
+                var data = AssetDatabase.LoadAssetAtPath<ScriptableData>(path);
 
-            entry.address = data.ID.ToString();
+                if (data == null) 
+                    continue;
+
+                var entry = settings.FindAssetEntry(assetGuid);
+                if (entry == null) 
+                    continue; 
+
+                entry.address = data.ID.ToString();
+                synced++;
+            }
+
             settings.SetDirty(AddressableAssetSettings.ModificationEvent.EntryModified, 
-                entry, true);
+                null, true);
+            
+            AssetDatabase.SaveAssets();
+            Debug.Log($"Synced {synced} Addressable GUIDs.");
         }
     }
 }
-#endif

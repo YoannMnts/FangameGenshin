@@ -1,5 +1,4 @@
 ﻿using Project.Core.Scripts.Mappers;
-using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Project.Core.Scripts.Datas
@@ -8,6 +7,6 @@ namespace Project.Core.Scripts.Datas
     public class RoadData : ScriptableData, IData
     {
         [field: SerializeField]
-        public DayData[] Days { get; private set; }
+        public DialogueData[] DaysFirstDialogue { get; private set; }
     }
 }

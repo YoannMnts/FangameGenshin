@@ -1,11 +1,12 @@
-﻿using Project.Core.Scripts.Datas;
+﻿using System.Threading;
+using UnityEngine;
 
 namespace Project.Core.Scripts.Mappers
 {
-    public interface IMapper<in TData, out TRuntime> 
+    public interface IMapper<in TData, TRuntime> 
         where TData : IData 
         where TRuntime : IRuntime
     { 
-        TRuntime Map(TData data);
+        Awaitable<TRuntime> Map(TData data, CancellationToken ct);
     }
 }

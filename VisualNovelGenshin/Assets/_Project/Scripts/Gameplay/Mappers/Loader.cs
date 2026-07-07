@@ -1,17 +1,19 @@
 ﻿using System.Threading;
 using Project.Core.Scripts.Datas;
 using Project.Core.Scripts.Mappers;
-using Project.Gameplay.Scripts.Roads;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace Project.Gameplay.Scripts.Mappers
 {
-    public class RoadLoader : ILoader<RoadData, Road>
+    /*
+    public abstract class Loader<TData, TRuntime> : ILoader<TData, TRuntime>
+    where TData : IData
+    where TRuntime : IRuntime
     {
-        private readonly RoadMapper mapper = new RoadMapper();
-        public async Awaitable<Road> LoadAsync(string key, CancellationToken ct)
+        public virtual async Awaitable<TRuntime> LoadAsync<TMapper>(string key, TMapper mapper, CancellationToken ct) 
+            where TMapper : IMapper<TData, TRuntime>
         {
             var handle = Addressables.LoadAssetAsync<RoadData>(key);
 
@@ -32,4 +34,5 @@ namespace Project.Gameplay.Scripts.Mappers
             return runtime;
         }
     }
+    */
 }

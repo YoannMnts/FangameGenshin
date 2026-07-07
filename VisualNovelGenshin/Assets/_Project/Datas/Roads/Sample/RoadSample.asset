@@ -10,6 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac4319074d364d83a76425a273d11e6a, type: 3}
-  m_Name: Road
+  m_Name: RoadSample
   m_EditorClassIdentifier: Project.Core::Project.Core.Scripts.Datas.RoadData
-  <Days>k__BackingField: []
+  guidText: d79618b7-f9b2-4743-a7e3-bf5f6b1bc522
+  <Days>k__BackingField:
+  - <Dialogues>k__BackingField:
+    - {fileID: 0}

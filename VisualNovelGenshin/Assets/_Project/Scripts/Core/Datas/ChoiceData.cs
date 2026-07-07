@@ -9,5 +9,8 @@ namespace Project.Core.Scripts.Datas
         [field: SerializeField]
         [TextArea] 
         public string Text { get; private set; }
+        
+        [field: SerializeField]
+        public DialogueData NextDialogue { get; private set; }
     }
 }

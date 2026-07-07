@@ -10,7 +10,7 @@ namespace Project.Gameplay.Scripts.Mappers
 {
     public class DialogueLoader : ILoader<DialogueData, Dialogue>
     {
-        private readonly DialogueMapper mapper = new DialogueMapper();
+        private readonly DialogueMapper mapper = new ();
 
         public async Awaitable<Dialogue> LoadAsync(string key, CancellationToken ct)
         {
@@ -27,7 +27,7 @@ namespace Project.Gameplay.Scripts.Mappers
                 return null;
             }
 
-            var runtime = mapper.Map(handle.Result);
+            var runtime = await mapper.Map(handle.Result, ct);
             Addressables.Release(handle);
 
             return runtime;

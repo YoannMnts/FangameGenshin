@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using Helteix.Tools.Phases;
+using Project.Core.Scripts.Datas;
 using Project.Gameplay.Scripts.Mappers;
 using Project.Gameplay.Scripts.Roads;
 using UnityEngine;
@@ -14,13 +15,13 @@ namespace Project.Gameplay.Scripts
 
         [Header("Debug")] 
         [SerializeField] 
-        private string GUID;
+        private RoadData roadToLaunch;
 
         private async void Start()
         {
             try
             {
-                await LaunchRoad("Dialogues/Dialogue1");
+                await LaunchRoad(roadToLaunch.ID.ToString());
             }
             catch (Exception e)
             {
