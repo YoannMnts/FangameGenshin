@@ -1,13 +1,13 @@
-﻿using System;
-using Helteix.Tools.UI;
+﻿using Helteix.Tools.UI;
+using Project.Gameplay.Scripts.Dialogues;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Project.Gameplay.Scripts.Choices.UIs
+namespace Project.Gameplay.Scripts.StoryWayChoices.UIs
 {
     [RequireComponent(typeof(Button))]
-    public class ChoiceUI : UIItem<Choice>
+    public class StoryPathChoiceUI : UIItem<StoryPath>
     {
         [SerializeField]
         private TMP_Text text;
@@ -15,19 +15,19 @@ namespace Project.Gameplay.Scripts.Choices.UIs
         [SerializeField]
         private Button choiceButton;
 
-        private Choice currentChoice;
-        private ChoosePhaseUI choosePhaseUI;
+        private StoryPath currentChoice;
+        private ChooseStoryPathPhaseUI chooseStoryPathPhaseUI;
 
         private void Awake()
         {
-            choosePhaseUI = GetComponentInParent<ChoosePhaseUI>();
+            chooseStoryPathPhaseUI = GetComponentInParent<ChooseStoryPathPhaseUI>();
         }
 
-        protected override void SyncUI(Choice current)
+        protected override void SyncUI(StoryPath current)
         {
             currentChoice = current;
             
-            text.text = currentChoice.text;
+            text.text = currentChoice.Choice.Text;
             
             choiceButton.onClick.AddListener(OnChoiceButtonClicked);
         }
@@ -41,7 +41,7 @@ namespace Project.Gameplay.Scripts.Choices.UIs
 
         private void OnChoiceButtonClicked()
         {
-            choosePhaseUI.TakeChoice(currentChoice.nextDialogueId);
+            chooseStoryPathPhaseUI.TakeChoice(currentChoice);
         }
     }
 }

@@ -1,8 +1,9 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using Project.Core.Scripts.Datas;
 using Project.Core.Scripts.Mappers;
-using Project.Gameplay.Scripts.Choices;
 using Project.Gameplay.Scripts.Dialogues;
+using Project.Gameplay.Scripts.StoryWayChoices;
 using Project.Gameplay.Scripts.Talks;
 using UnityEngine;
 
@@ -13,15 +14,23 @@ namespace Project.Gameplay.Scripts.Mappers
         public async Awaitable<Dialogue> Map(DialogueData data, CancellationToken ct)
         {
             await Awaitable.MainThreadAsync();
-            var talks = new Talk[data.Talks.Length];
-            for (int i = 0; i < data.Talks.Length; i++)
-                talks[i] = new Talk(data.Talks[i].Text);
-
-            var choices = new Choice[data.Choices.Length];
-            for (int i = 0; i < data.Choices.Length; i++)
-                choices[i] = new Choice(data.Choices[i].Text, data.Choices[i].NextDialogue.ID);
             
-            return new Dialogue(talks, choices);
+            var storyPaths = new StoryPath[data.StoryPaths.Length];
+            for (int i = 0; i < data.StoryPaths.Length; i++)
+            {
+                var storyPath = data.StoryPaths[i];
+                
+                var talks = new Talk[storyPath.Talks.Length];
+                for (int j = 0; j < storyPath.Talks.Length; j++)
+                    talks[j] = new Talk(storyPath.Talks[j].Texts);
+
+                var choices = new Choice(storyPath.Choice.Text);
+                var nextDialogueId = storyPath.NextDialogue ? storyPath.NextDialogue.ID : Guid.Empty;
+                
+                storyPaths[i] = new StoryPath(choices, talks, nextDialogueId);
+            }
+            
+            return new Dialogue(storyPaths);
         }
     }
     

@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de66a4141afd45918a54c3a732b4f843, type: 3}
+  m_Name: Dialogue1
+  m_EditorClassIdentifier: Project.Core::Project.Core.Scripts.Datas.DialogueData
+  guidText: 60757060-cdf5-4ea6-a9cd-ce5f071bad07
+  <StoryWays>k__BackingField:
+  - <Choice>k__BackingField:
+      <Text>k__BackingField: Choix A
+    <Talks>k__BackingField:
+    - {fileID: 11400000, guid: 1e5cd1158d2c7954fa6b6ab9f2b92c66, type: 2}
+    - {fileID: 11400000, guid: e5d171c580640f74e8567c64db7029d8, type: 2}
+    <NextDialogue>k__BackingField: {fileID: 0}
+  - <Choice>k__BackingField:
+      <Text>k__BackingField: Choix B
+    <Talks>k__BackingField:
+    - {fileID: 11400000, guid: 6af32850898fc4f438f07a1cf6b918d4, type: 2}
+    - {fileID: 11400000, guid: e5d171c580640f74e8567c64db7029d8, type: 2}
+    <NextDialogue>k__BackingField: {fileID: 0}
+  - <Choice>k__BackingField:
+      <Text>k__BackingField: Choix C
+    <Talks>k__BackingField:
+    - {fileID: 11400000, guid: 2c26b772e9d415c4591959940ffe9452, type: 2}
+    - {fileID: 11400000, guid: e5d171c580640f74e8567c64db7029d8, type: 2}
+    <NextDialogue>k__BackingField: {fileID: 0}

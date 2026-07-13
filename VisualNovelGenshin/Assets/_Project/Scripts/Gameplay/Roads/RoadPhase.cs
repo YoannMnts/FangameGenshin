@@ -31,8 +31,8 @@ namespace Project.Gameplay.Scripts.Roads
                 
                 while (currentDialogue != null)
                 {
-                    var firstDialoguePhase = new DialoguePhase(currentDialogue);
-                    var result = await firstDialoguePhase.Run();
+                    var dialoguePhase = new DialoguePhase(currentDialogue);
+                    var result = await dialoguePhase.Run();
                     
                     if (result.value == Guid.Empty)
                         break;

@@ -3,11 +3,10 @@ using UnityEngine;
 
 namespace Project.Core.Scripts.Datas
 {
-    [Serializable]
-    public class TalkData
+    [CreateAssetMenu(fileName = "Talk", menuName = "Datas/Talk")]
+    public class TalkData : ScriptableData
     {
-        [field: SerializeField]
-        [TextArea]
-        public string Text { get; private set; }
+        [field: SerializeField, TextArea]
+        public string[] Texts { get; private set; }
     }
 }

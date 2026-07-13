@@ -8,9 +8,6 @@ namespace Project.Core.Scripts.Datas
     public class DialogueData : ScriptableData, IData
     {
         [field: SerializeField]
-        public TalkData[] Talks { get; private set; }
-        
-        [field: SerializeField]
-        public ChoiceData[] Choices { get; private set; }
+        public StoryPathData[] StoryPaths { get; private set; }
     }
 }

@@ -6,7 +6,7 @@ namespace Project.Gameplay.Scripts.Talks.UIs
 {
     public class TalkPhaseUI : MonoPhaseListener<TalkPhase>
     {
-        public string TalkText => currentPhase.Talk.Text;
+        public string[] TalkTexts => currentPhase.Talks.Texts;
 
         [SerializeField]
         private TalkUI talkUI;

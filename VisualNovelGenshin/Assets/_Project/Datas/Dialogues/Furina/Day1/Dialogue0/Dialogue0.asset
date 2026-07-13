@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: de66a4141afd45918a54c3a732b4f843, type: 3}
-  m_Name: DialogueSample
+  m_Name: Dialogue0
   m_EditorClassIdentifier: Project.Core::Project.Core.Scripts.Datas.DialogueData
-  guidText: a71debe9-a841-4005-b30c-b5a879631e3d
+  guidText: 4ab75f08-5c6e-4438-8765-4f7b77420cbf
   <StoryWays>k__BackingField:
   - <Choice>k__BackingField:
-      <Text>k__BackingField: 
-    <TalkDatas>k__BackingField:
-    - {fileID: 11400000, guid: 1300cc35ed080a54ebe46daae65dad2e, type: 2}
-    - {fileID: 11400000, guid: 2f71a44fafd9dc844a4eb11fcb5a8876, type: 2}
-    <NextDialogue>k__BackingField: {fileID: 0}
+      <Text>k__BackingField: Commencer l'aventure
+    <Talks>k__BackingField:
+    - {fileID: 11400000, guid: 79ba16b64bf3144489025ada3151ff67, type: 2}
+    - {fileID: 11400000, guid: fbbc508ede9ed434394b1a41c352562e, type: 2}
+    <NextDialogue>k__BackingField: {fileID: 11400000, guid: fd3f0bc37df2a164086bd9bcc1f6a3e6, type: 2}

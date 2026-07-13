@@ -4,11 +4,11 @@ namespace Project.Gameplay.Scripts.Talks
 {
     public class Talk : IRuntime
     {
-        public string Text { get; private set; }
+        public string[] Texts { get; private set; }
         
-        public Talk(string text)
+        public Talk(string[] texts)
         { 
-            Text = text;
+            Texts = texts;
         }
     }
 }

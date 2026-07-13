@@ -68,7 +68,7 @@ MonoBehaviour:
   <OnPhaseEndUnityEvent>k__BackingField:
     m_PersistentCalls:
       m_Calls: []
-  choiceUIList: {fileID: 4085947222478489499}
+  storyPathChoiceUIList: {fileID: 4085947222478489499}
   group: {fileID: 6554866405494181242}
 --- !u!1001 &3532187602389180855
 PrefabInstance:

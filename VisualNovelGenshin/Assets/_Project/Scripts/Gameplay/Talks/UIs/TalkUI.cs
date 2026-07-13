@@ -16,23 +16,34 @@ namespace Project.Gameplay.Scripts.Talks.UIs
         
         public async void Sync(TalkPhaseUI phaseUI)
         {
-            
-            cts?.Cancel();
-            cts?.Dispose();
-
-            cts = CancellationTokenSource.CreateLinkedTokenSource(destroyCancellationToken);
-
-            talkPhaseUI = phaseUI;
-            text.text = talkPhaseUI.TalkText;
-            text.maxVisibleCharacters = 0;
             try
             {
-                await ShowCharacters(cts.Token);
+                cts?.Cancel();
+                cts?.Dispose();
 
-            }
-            catch (OperationCanceledException)
-            {
-                text.maxVisibleCharacters = text.textInfo.characterCount;
+                cts = CancellationTokenSource.CreateLinkedTokenSource(destroyCancellationToken);
+
+                talkPhaseUI = phaseUI;
+                for (int i = 0; i < talkPhaseUI.TalkTexts.Length; i++)
+                {
+                    var talkText = talkPhaseUI.TalkTexts[i];
+                    text.text = talkText;
+                    text.maxVisibleCharacters = 0;
+                    try
+                    {
+                        await ShowCharacters(cts.Token);
+
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        text.maxVisibleCharacters = text.textInfo.characterCount;
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.LogError(e);
+                    }
+                }
+                var talkTexts = talkPhaseUI.TalkTexts;
             }
             catch (Exception e)
             {

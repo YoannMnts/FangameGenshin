@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 using Helteix.Tools.Phases;
-using Project.Gameplay.Scripts.Choices;
+using Project.Gameplay.Scripts.StoryWayChoices;
 using Project.Gameplay.Scripts.Talks;
 using UnityEngine;
 
@@ -18,17 +18,19 @@ namespace Project.Gameplay.Scripts.Dialogues
 
         async Awaitable<Guid> IPhase<Guid>.Execute(CancellationToken token)
         {
-            for (int i = 0; i < Dialogue.dialogues.Length; i++)
-            {
-                var talk = Dialogue.dialogues[i];
-                var dialoguePhase = new TalkPhase(talk);
-                await dialoguePhase.Run();
-            }
-
-            var choosePhase = new ChoosePhase(Dialogue.choices);
-            var nextDialogue = await choosePhase.Run();
+            var choosePhase = new ChooseStoryPathPhase(Dialogue.StoryWays);
+            var result = await choosePhase.Run();
             
-            return nextDialogue.value;
+            var storyPath = result.value;
+
+            for (int i = 0; i < storyPath.Talks.Length; i++)
+            {
+                var talk = storyPath.Talks[i];
+                var talkPhase = new TalkPhase(talk);
+                await talkPhase.Run();
+            }
+            
+            return storyPath.NextDialogueID;
         }
 
         async Awaitable IPhase<Guid>.Initialize(CancellationToken token)
