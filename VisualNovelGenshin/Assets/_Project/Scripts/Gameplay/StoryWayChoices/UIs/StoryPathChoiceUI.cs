@@ -7,7 +7,7 @@ using UnityEngine.UI;
 namespace Project.Gameplay.Scripts.StoryWayChoices.UIs
 {
     [RequireComponent(typeof(Button))]
-    public class StoryPathChoiceUI : UIItem<StoryPath>
+    public class StoryPathChoiceUI : UIItem<Choice>
     {
         [SerializeField]
         private TMP_Text text;
@@ -15,7 +15,7 @@ namespace Project.Gameplay.Scripts.StoryWayChoices.UIs
         [SerializeField]
         private Button choiceButton;
 
-        private StoryPath currentChoice;
+        private Choice currentChoice;
         private ChooseStoryPathPhaseUI chooseStoryPathPhaseUI;
 
         private void Awake()
@@ -23,11 +23,11 @@ namespace Project.Gameplay.Scripts.StoryWayChoices.UIs
             chooseStoryPathPhaseUI = GetComponentInParent<ChooseStoryPathPhaseUI>();
         }
 
-        protected override void SyncUI(StoryPath current)
+        protected override void SyncUI(Choice current)
         {
             currentChoice = current;
             
-            text.text = currentChoice.Choice.Text;
+            text.text = currentChoice.Text;
             
             choiceButton.onClick.AddListener(OnChoiceButtonClicked);
         }

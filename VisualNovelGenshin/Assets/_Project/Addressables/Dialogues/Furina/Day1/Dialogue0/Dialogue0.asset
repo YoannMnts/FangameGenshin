@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Dialogue0
   m_EditorClassIdentifier: Project.Core::Project.Core.Scripts.Datas.DialogueData
   guidText: 4ab75f08-5c6e-4438-8765-4f7b77420cbf
-  <StoryWays>k__BackingField:
+  <StoryPaths>k__BackingField:
   - <Choice>k__BackingField:
       <Text>k__BackingField: Commencer l'aventure
     <Talks>k__BackingField:

@@ -18,14 +18,17 @@ namespace Project.Gameplay.Scripts.Dialogues
 
         async Awaitable<Guid> IPhase<Guid>.Execute(CancellationToken token)
         {
-            var choosePhase = new ChooseStoryPathPhase(Dialogue.StoryWays);
+            var choosePhase = new ChooseStoryPathPhase(Dialogue.Choices);
             var result = await choosePhase.Run();
-            
-            var storyPath = result.value;
+            var choice = result.value;
+
+            if (!Dialogue.TryFindStoryPath(choice, out var storyPath)) 
+                return Guid.Empty;
 
             for (int i = 0; i < storyPath.Talks.Length; i++)
             {
                 var talk = storyPath.Talks[i];
+                
                 var talkPhase = new TalkPhase(talk);
                 await talkPhase.Run();
             }

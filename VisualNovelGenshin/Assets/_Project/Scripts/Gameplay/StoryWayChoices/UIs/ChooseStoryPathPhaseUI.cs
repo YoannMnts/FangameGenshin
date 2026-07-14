@@ -25,10 +25,11 @@ namespace Project.Gameplay.Scripts.StoryWayChoices.UIs
             base.OnPhaseBegin(storyPathPhase);
             
             currentStoryPathPhase = storyPathPhase;
-            var choices = storyPathPhase.StoryWays;
+            var choices = storyPathPhase.Choices;
             
             group.Show();
             storyPathChoiceUIList.Connect(choices);
+            Debug.Log($"choices: {choices.Length}");
         }
 
         protected override void OnPhaseEnd(ChooseStoryPathPhase storyPathPhase)
@@ -39,7 +40,7 @@ namespace Project.Gameplay.Scripts.StoryWayChoices.UIs
             group.Hide();
         }
 
-        public void TakeChoice(StoryPath choice)
+        public void TakeChoice(Choice choice)
         {
             currentStoryPathPhase.SetResult(choice);
         }

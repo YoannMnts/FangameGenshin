@@ -14,6 +14,9 @@ namespace Project.Gameplay.Scripts.Talks.UIs
         private CancellationTokenSource cts;
         private TalkPhaseUI talkPhaseUI;
         
+        private int TotalCharacters => text.text.Length;
+        private bool IsAllShown => text.maxVisibleCharacters == text.text.Length;
+        
         public async void Sync(TalkPhaseUI phaseUI)
         {
             try
@@ -32,18 +35,16 @@ namespace Project.Gameplay.Scripts.Talks.UIs
                     try
                     {
                         await ShowCharacters(cts.Token);
-
                     }
                     catch (OperationCanceledException)
                     {
-                        text.maxVisibleCharacters = text.textInfo.characterCount;
+                        text.maxVisibleCharacters = TotalCharacters;
                     }
                     catch (Exception e)
                     {
                         Debug.LogError(e);
                     }
                 }
-                var talkTexts = talkPhaseUI.TalkTexts;
             }
             catch (Exception e)
             {
@@ -58,25 +59,27 @@ namespace Project.Gameplay.Scripts.Talks.UIs
         
         private async Awaitable ShowCharacters(CancellationToken token)
         {
-            int totalCharacters = text.textInfo.characterCount;
-
-            for (int i = 0; i <= totalCharacters; i++)
+            for (int i = 0; i <= TotalCharacters; i++)
             {
                 text.maxVisibleCharacters = i;
-                await Awaitable.WaitForSecondsAsync(.3f, token);
+                await Awaitable.WaitForSecondsAsync(.1f, token);
             }
             
             await Awaitable.WaitForSecondsAsync(1f, token);
-            talkPhaseUI.NextTalk(true);
         }
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            cts.Cancel();
-
-            if (text.maxVisibleCharacters == text.textInfo.characterCount)
-                talkPhaseUI.NextTalk(true);
-            
+            switch (IsAllShown)
+            {
+                case true:
+                    talkPhaseUI.NextTalk(true);
+                    return;
+                
+                case false:
+                    cts.Cancel();
+                    return;
+            }
         }
 
         private void OnDestroy()

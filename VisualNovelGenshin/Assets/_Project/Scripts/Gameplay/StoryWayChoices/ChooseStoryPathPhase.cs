@@ -3,13 +3,13 @@ using Project.Gameplay.Scripts.Dialogues;
 
 namespace Project.Gameplay.Scripts.StoryWayChoices
 {
-    public class ChooseStoryPathPhase : PhaseCompletionSource<StoryPath>
+    public class ChooseStoryPathPhase : PhaseCompletionSource<Choice>
     {
-        public StoryPath[] StoryWays { get; private set; }
+        public Choice[] Choices { get; private set; }
 
-        public ChooseStoryPathPhase(StoryPath[] storyWays)
+        public ChooseStoryPathPhase(Choice[] choices)
         {
-            StoryWays = storyWays;
+            Choices = choices;
         }
     }
 }
