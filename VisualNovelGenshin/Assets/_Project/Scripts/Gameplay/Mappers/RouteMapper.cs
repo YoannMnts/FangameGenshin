@@ -2,15 +2,15 @@
 using Project.Core.Scripts.Datas;
 using Project.Core.Scripts.Mappers;
 using Project.Gameplay.Scripts.Dialogues;
-using Project.Gameplay.Scripts.Roads;
+using Project.Gameplay.Scripts.Routes;
 using UnityEngine;
 
 namespace Project.Gameplay.Scripts.Mappers
 {
-    public class RoadMapper : IMapper<RoadData, Road>
+    public class RouteMapper : IMapper<RouteData, Route>
     {
         private readonly Loader<DialogueData, Dialogue> dialogueLoader = new ();
-        public async Awaitable<Road> Map(RoadData data, CancellationToken ct)
+        public async Awaitable<Route> Map(RouteData data, CancellationToken ct)
         {
             var dialogues = new Dialogue[data.DaysFirstDialogue.Length];
             
@@ -19,7 +19,7 @@ namespace Project.Gameplay.Scripts.Mappers
                 dialogues[i] = await dialogueLoader.LoadAsync<DialogueMapper>(data.DaysFirstDialogue[i].ID.ToString(), ct);
             }
             
-            return new Road(dialogues);
+            return new Route(dialogues);
         }
     }
 }

@@ -10,6 +10,9 @@ namespace Project.Gameplay.Scripts.Dialogues
     public class DialoguePhase : IPhase<Guid>
     {
         public Dialogue Dialogue { get; private set; }
+    
+        private StoryPath currentStoryPath;
+        private bool skipRequested;
 
         public DialoguePhase(Dialogue dialogue)
         {
@@ -25,19 +28,29 @@ namespace Project.Gameplay.Scripts.Dialogues
             if (!Dialogue.TryFindStoryPath(choice, out var storyPath)) 
                 return Guid.Empty;
 
-            for (int i = 0; i < storyPath.Talks.Length; i++)
+            currentStoryPath = storyPath;
+        
+            for (int i = 0; i < currentStoryPath.Talks.Length; i++)
             {
-                var talk = storyPath.Talks[i];
-                
+                if (skipRequested) 
+                    break;
+            
+                var talk = currentStoryPath.Talks[i];
                 var talkPhase = new TalkPhase(talk);
                 await talkPhase.Run();
             }
-            
-            return storyPath.NextDialogueID;
+        
+            return currentStoryPath.NextDialogueID;
+        }
+
+        public void WantSkip()
+        {
+            skipRequested = true;
         }
 
         async Awaitable IPhase<Guid>.Initialize(CancellationToken token)
         {
+            skipRequested = false;
             await Awaitable.MainThreadAsync();
         }
 

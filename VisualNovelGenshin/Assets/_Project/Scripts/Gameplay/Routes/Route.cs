@@ -1,13 +1,13 @@
 ﻿using Project.Core.Scripts.Mappers;
 using Project.Gameplay.Scripts.Dialogues;
 
-namespace Project.Gameplay.Scripts.Roads
+namespace Project.Gameplay.Scripts.Routes
 {
-    public class Road : IRuntime
+    public class Route : IRuntime
     {
         public readonly Dialogue[] daysFirstDialogue;
 
-        public Road(Dialogue[] daysFirstDialogue)
+        public Route(Dialogue[] daysFirstDialogue)
         {
             this.daysFirstDialogue = daysFirstDialogue;
         }

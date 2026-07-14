@@ -3,44 +3,40 @@ using System.Threading;
 using Helteix.Tools.Phases;
 using Project.Core.Scripts.Datas;
 using Project.Gameplay.Scripts.Mappers;
-using Project.Gameplay.Scripts.Roads;
+using Project.Gameplay.Scripts.Routes;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Project.Gameplay.Scripts
 {
     public class GameManager : MonoBehaviour
     {
-        private readonly Loader<RoadData, Road> roadLoader = new();
+        private readonly Loader<RouteData, Route> routeLoader = new();
         private CancellationToken ct;
-
-        [Header("Debug")] 
-        [SerializeField] 
-        private RoadData roadToLaunch;
-
-        private async void Start()
+        
+        private async Awaitable LaunchRoute(Guid guid)
         {
-            try
-            {
-                await LaunchRoad(roadToLaunch.ID.ToString());
-            }
-            catch (Exception e)
-            {
-                Debug.LogError(e);
-            }
-        }
+            var route = await routeLoader.LoadAsync<RouteMapper>(guid, ct);
 
-        private async Awaitable LaunchRoad(string key)
-        {
-            var road = await roadLoader.LoadAsync<RoadMapper>(key, ct);
-
-            if (road == null)
+            if (route == null)
             {
-                Debug.LogError($"Failed to load road: {key}");
+                Debug.LogError($"Failed to load route: {guid.ToString()}");
                 return;
             }
 
-            var dialoguePhase = new RoadPhase(road);
-            dialoguePhase.RunAndForget();
+            var routePhase = new RoutePhase(route);
+            var result = await routePhase.Run();
+            
+            Debug.Log($"Route Phase result: {result.value}");
+            if(result.value)
+                RouteManager.AddRouteDone(route);
+            
+        }
+
+        [Button]
+        public void LaunchRoute(RouteData route)
+        {
+            _ = LaunchRoute(route.ID);
         }
     }
 }

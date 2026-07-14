@@ -6,17 +6,17 @@ using Project.Gameplay.Scripts.Dialogues;
 using Project.Gameplay.Scripts.Mappers;
 using UnityEngine;
 
-namespace Project.Gameplay.Scripts.Roads
+namespace Project.Gameplay.Scripts.Routes
 {
-    public class RoadPhase : PhaseCompletionSource<int>
+    public class RoutePhase : PhaseCompletionSource<bool>
     {
-        public Road Road { get; private set; }
+        public Route Route { get; private set; }
         
         private readonly Loader<DialogueData, Dialogue> dialogueLoader;
 
-        public RoadPhase(Road road)
+        public RoutePhase(Route route)
         {
-            Road = road;
+            Route = route;
             dialogueLoader = new ();
         }
 
@@ -24,7 +24,7 @@ namespace Project.Gameplay.Scripts.Roads
         {
             base.Initialize(token);
             
-            var daysFirstDialogue = Road.daysFirstDialogue;
+            var daysFirstDialogue = Route.daysFirstDialogue;
             for (int i = 0; i < daysFirstDialogue.Length; i++)
             {
                 var currentDialogue = daysFirstDialogue[i];
@@ -40,6 +40,8 @@ namespace Project.Gameplay.Scripts.Roads
                     currentDialogue = await dialogueLoader.LoadAsync<DialogueMapper>(result.value, token);
                 }
             }
+
+            SetResult(true);
         }
     }
 }

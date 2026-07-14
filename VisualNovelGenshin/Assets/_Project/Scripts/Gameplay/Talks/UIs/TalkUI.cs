@@ -55,6 +55,7 @@ namespace Project.Gameplay.Scripts.Talks.UIs
         public void ClearUI()
         {
             text.text = string.Empty;
+            cts?.Cancel();
         }
         
         private async Awaitable ShowCharacters(CancellationToken token)
