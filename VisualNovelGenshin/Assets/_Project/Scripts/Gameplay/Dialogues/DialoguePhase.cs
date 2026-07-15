@@ -13,7 +13,7 @@ namespace Project.Gameplay.Scripts.Dialogues
     
         private StoryPath currentStoryPath;
         private bool skipRequested;
-
+        
         public DialoguePhase(Dialogue dialogue)
         {
             Dialogue = dialogue;
@@ -21,8 +21,8 @@ namespace Project.Gameplay.Scripts.Dialogues
 
         async Awaitable<Guid> IPhase<Guid>.Execute(CancellationToken token)
         {
-            var choosePhase = new ChooseStoryPathPhase(Dialogue.Choices);
-            var result = await choosePhase.Run();
+            var choosePathPhase = new ChooseStoryPathPhase(Dialogue.Choices);
+            var result = await choosePathPhase.Run();
             var choice = result.value;
 
             if (!Dialogue.TryFindStoryPath(choice, out var storyPath)) 
@@ -50,8 +50,9 @@ namespace Project.Gameplay.Scripts.Dialogues
 
         async Awaitable IPhase<Guid>.Initialize(CancellationToken token)
         {
-            skipRequested = false;
             await Awaitable.MainThreadAsync();
+            
+            skipRequested = false;
         }
 
         async Awaitable IPhase<Guid>.Dispose(CancellationToken token)

@@ -1,15 +1,21 @@
-﻿using Project.Core.Scripts.Mappers;
+﻿using System;
+using Project.Core.Scripts.Mappers;
 using Project.Gameplay.Scripts.Dialogues;
 
 namespace Project.Gameplay.Scripts.Routes
 {
-    public class Route : IRuntime
+    public struct Route : IRuntime
     {
-        public readonly Dialogue[] daysFirstDialogue;
-
-        public Route(Dialogue[] daysFirstDialogue)
+        public readonly Guid id;
+        
+        public static Route Empty = new ();
+        
+        public Dialogue[] DaysFirstDialogue { get; private set; }
+        
+        public Route(Dialogue[] daysFirstDialogue, Guid id)
         {
-            this.daysFirstDialogue = daysFirstDialogue;
+            this.id = id;
+            DaysFirstDialogue = daysFirstDialogue;
         }
     }
 }

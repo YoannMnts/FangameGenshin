@@ -1,29 +1,31 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Project.Core.Scripts.Datas;
+using Project.Gameplay.Scripts.Mappers;
+using UnityEngine;
 
 namespace Project.Gameplay.Scripts.Routes
 {
     public static class RouteManager
     {
-        private static readonly List<Route> RoutesAlreadyDone;
-
-        static RouteManager()
+        private static readonly HashSet<Guid> RoutesAlreadyDone = new();
+        
+        public static void AddRouteDone(RouteData data)
         {
-            RoutesAlreadyDone = new();
+            Debug.Log($"Adding route {data}");
+            RoutesAlreadyDone.Add(data.ID);
+        }
+
+        public static void RemoveRouteDone(RouteData data)
+        {
+            Debug.Log($"Removing route {data}");
+            RoutesAlreadyDone.Remove(data.ID);
         }
         
-        public static void AddRouteDone(Route route)
-        {
-            RoutesAlreadyDone.Add(route);
-        }
-
-        public static void RemoveRouteDone(Route route)
-        {
-            RoutesAlreadyDone.Remove(route);
-        }
-
         public static bool HasBeenDone(Route route)
         {
-            return RoutesAlreadyDone.Contains(route);
+            Debug.Log($"Has Been Done {RoutesAlreadyDone.Contains(route.id)}");
+            return RoutesAlreadyDone.Contains(route.id);
         }
     }
 }

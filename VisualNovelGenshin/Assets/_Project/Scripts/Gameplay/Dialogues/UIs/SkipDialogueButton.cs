@@ -1,4 +1,6 @@
-﻿using Project.Gameplay.Scripts.Talks;
+﻿using Helteix.Tools.Phases;
+using Project.Gameplay.Scripts.Routes;
+using Project.Gameplay.Scripts.Talks;
 using Project.Gameplay.Scripts.Utilities;
 using UnityEngine;
 using UnityEngine.UI;
@@ -28,6 +30,5 @@ namespace Project.Gameplay.Scripts.Dialogues.UIs
             currentDialoguePhase?.WantSkip();
             currentTalkPhase?.SetResult(false);
         }
-        
     }
 }

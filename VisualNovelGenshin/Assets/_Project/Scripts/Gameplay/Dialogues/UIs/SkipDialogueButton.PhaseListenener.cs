@@ -1,4 +1,5 @@
-﻿using Helteix.Tools.Phases;
+﻿using System;
+using Helteix.Tools.Phases;
 using Project.Gameplay.Scripts.Routes;
 using Project.Gameplay.Scripts.Talks;
 using Project.Gameplay.Scripts.Utilities;
@@ -27,7 +28,6 @@ namespace Project.Gameplay.Scripts.Dialogues.UIs
 
         void IPhaseListener<RoutePhase>.OnPhaseBegin(RoutePhase phase)
         {
-            Debug.Log($"[SkipDialogueButton] Phase {phase}]");
             canBeShown = RouteManager.HasBeenDone(phase.Route);
         }
 
@@ -35,10 +35,9 @@ namespace Project.Gameplay.Scripts.Dialogues.UIs
         {
             canBeShown = false;
         }
-        
+
         void IPhaseListener<DialoguePhase>.OnPhaseBegin(DialoguePhase phase)
         {
-            Debug.Log($"[SkipDialogueButton] Phase {phase}]");
             if(!canBeShown)
                 return;
             
@@ -58,7 +57,6 @@ namespace Project.Gameplay.Scripts.Dialogues.UIs
 
         void IPhaseListener<TalkPhase>.OnPhaseBegin(TalkPhase phase)
         {
-            Debug.Log($"[SkipDialogueButton] Phase {phase}]");
             if(!canBeShown)
                 return;
             
@@ -74,5 +72,7 @@ namespace Project.Gameplay.Scripts.Dialogues.UIs
             currentTalkPhase = null;
             group.Hide();
         }
+
+        
     }
 }

@@ -8,40 +8,48 @@ using UnityEngine;
 
 namespace Project.Gameplay.Scripts.Routes
 {
-    public class RoutePhase : PhaseCompletionSource<bool>
+    public class RoutePhase : IPhase<bool>
     {
         public Route Route { get; private set; }
         
         private readonly Loader<DialogueData, Dialogue> dialogueLoader;
-
+        
         public RoutePhase(Route route)
         {
             Route = route;
             dialogueLoader = new ();
         }
 
-        protected override async Awaitable Initialize(CancellationToken token)
+        async Awaitable<bool> IPhase<bool>.Execute(CancellationToken token)
         {
-            base.Initialize(token);
-            
-            var daysFirstDialogue = Route.daysFirstDialogue;
+            var daysFirstDialogue = Route.DaysFirstDialogue;
             for (int i = 0; i < daysFirstDialogue.Length; i++)
             {
                 var currentDialogue = daysFirstDialogue[i];
-                
+                    
                 while (currentDialogue != null)
                 {
                     var dialoguePhase = new DialoguePhase(currentDialogue);
                     var result = await dialoguePhase.Run();
-                    
+
                     if (result.value == Guid.Empty)
                         break;
-                    
+                        
                     currentDialogue = await dialogueLoader.LoadAsync<DialogueMapper>(result.value, token);
                 }
             }
+            
+            return true;
+        }
 
-            SetResult(true);
+        async Awaitable IPhase<bool>.Initialize(CancellationToken token)
+        {
+            await Awaitable.MainThreadAsync();
+        }
+
+        async Awaitable IPhase<bool>.Dispose(CancellationToken token)
+        {
+            await Awaitable.MainThreadAsync();
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Project.Gameplay.Scripts.Mappers
         where TData : IData
         where TRuntime : IRuntime
     {
-        public async Awaitable<TRuntime> LoadAsync<TMapper>(Guid key, CancellationToken ct) 
+        public async Awaitable<TRuntime> LoadAsync<TMapper>(Guid key, CancellationToken ct = default) 
             where TMapper : IMapper<TData, TRuntime>, new()
         {
             var result = await LoadAsync<TMapper>(key.ToString(), ct);

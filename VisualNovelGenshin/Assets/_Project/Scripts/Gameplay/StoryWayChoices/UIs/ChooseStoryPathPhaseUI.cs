@@ -29,7 +29,6 @@ namespace Project.Gameplay.Scripts.StoryWayChoices.UIs
             
             group.Show();
             storyPathChoiceUIList.Connect(choices);
-            Debug.Log($"choices: {choices.Length}");
         }
 
         protected override void OnPhaseEnd(ChooseStoryPathPhase storyPathPhase)

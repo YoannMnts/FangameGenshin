@@ -19,7 +19,7 @@ namespace Project.Gameplay.Scripts.Mappers
                 dialogues[i] = await dialogueLoader.LoadAsync<DialogueMapper>(data.DaysFirstDialogue[i].ID.ToString(), ct);
             }
             
-            return new Route(dialogues);
+            return new Route(dialogues, data.ID);
         }
     }
 }

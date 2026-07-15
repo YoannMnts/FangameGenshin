@@ -14,11 +14,12 @@ namespace Project.Gameplay.Scripts
         private readonly Loader<RouteData, Route> routeLoader = new();
         private CancellationToken ct;
         
-        private async Awaitable LaunchRoute(Guid guid)
+        private async Awaitable LaunchRoute(RouteData data)
         {
+            var guid = data.ID;
             var route = await routeLoader.LoadAsync<RouteMapper>(guid, ct);
 
-            if (route == null)
+            if (Equals(route, Route.Empty))
             {
                 Debug.LogError($"Failed to load route: {guid.ToString()}");
                 return;
@@ -27,16 +28,14 @@ namespace Project.Gameplay.Scripts
             var routePhase = new RoutePhase(route);
             var result = await routePhase.Run();
             
-            Debug.Log($"Route Phase result: {result.value}");
             if(result.value)
-                RouteManager.AddRouteDone(route);
-            
+                RouteManager.AddRouteDone(data);
         }
 
         [Button]
-        public void LaunchRoute(RouteData route)
+        public void LaunchRouteByData(RouteData routeData)
         {
-            _ = LaunchRoute(route.ID);
+            _ = LaunchRoute(routeData);
         }
     }
 }
