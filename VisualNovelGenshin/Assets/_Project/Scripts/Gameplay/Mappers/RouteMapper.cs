@@ -1,8 +1,8 @@
 ﻿using System.Threading;
 using Project.Core.Scripts.Datas;
 using Project.Core.Scripts.Mappers;
-using Project.Gameplay.Scripts.Dialogues;
-using Project.Gameplay.Scripts.Routes;
+using Project.Gameplay.Scripts.GameplayPhases.Dialogues;
+using Project.Gameplay.Scripts.GameplayPhases.Routes;
 using UnityEngine;
 
 namespace Project.Gameplay.Scripts.Mappers

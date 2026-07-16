@@ -1,0 +1,17 @@
+{
+    "name": "Project.Debugs",
+    "rootNamespace": "",
+    "references": [
+        "GUID:74ab3c852f7f3914eb3e611647a49935",
+        "GUID:fd9491f167da83a4db5ed4dbe658de6e"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

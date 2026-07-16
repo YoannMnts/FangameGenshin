@@ -2,9 +2,9 @@
 using System.Threading;
 using Project.Core.Scripts.Datas;
 using Project.Core.Scripts.Mappers;
-using Project.Gameplay.Scripts.Dialogues;
-using Project.Gameplay.Scripts.StoryWayChoices;
-using Project.Gameplay.Scripts.Talks;
+using Project.Gameplay.Scripts.GameplayPhases.Dialogues;
+using Project.Gameplay.Scripts.GameplayPhases.StoryWayChoices;
+using Project.Gameplay.Scripts.GameplayPhases.Talks;
 using UnityEngine;
 
 namespace Project.Gameplay.Scripts.Mappers

@@ -2,19 +2,27 @@
 using System.Threading;
 using Helteix.Tools.Phases;
 using Project.Core.Scripts.Datas;
+using Project.Gameplay.Scripts.GameplayPhases.Routes;
 using Project.Gameplay.Scripts.Mappers;
-using Project.Gameplay.Scripts.Routes;
-using Sirenix.OdinInspector;
+using Project.Gameplay.Scripts.Storage;
 using UnityEngine;
 
 namespace Project.Gameplay.Scripts
 {
-    public class GameManager : MonoBehaviour
+    public class GameManager : IDisposable
     {
-        private readonly Loader<RouteData, Route> routeLoader = new();
-        private CancellationToken ct;
+        private readonly Storage<Guid> routeIdStorage;
+        private readonly Loader<RouteData, Route> routeLoader;
+        private readonly CancellationToken ct;
+
+        public GameManager(CancellationToken ct)
+        {
+            routeIdStorage = new Storage<Guid>();
+            routeLoader = new Loader<RouteData, Route>();
+            this.ct = ct;
+        }
         
-        private async Awaitable LaunchRoute(RouteData data)
+        public async Awaitable LaunchRoute(RouteData data)
         {
             var guid = data.ID;
             var route = await routeLoader.LoadAsync<RouteMapper>(guid, ct);
@@ -24,18 +32,17 @@ namespace Project.Gameplay.Scripts
                 Debug.LogError($"Failed to load route: {guid.ToString()}");
                 return;
             }
-
-            var routePhase = new RoutePhase(route);
+            
+            var routePhase = new RoutePhase(route, routeIdStorage);
             var result = await routePhase.Run();
             
             if(result.value)
-                RouteManager.AddRouteDone(data);
+                routeIdStorage.Store(data.ID);
         }
-
-        [Button]
-        public void LaunchRouteByData(RouteData routeData)
+        
+        public void Dispose()
         {
-            _ = LaunchRoute(routeData);
+            routeIdStorage?.Dispose();
         }
     }
 }
