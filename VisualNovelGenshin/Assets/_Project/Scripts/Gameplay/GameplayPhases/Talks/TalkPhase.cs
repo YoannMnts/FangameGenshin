@@ -4,11 +4,11 @@ namespace Project.Gameplay.Scripts.GameplayPhases.Talks
 {
     public class TalkPhase : PhaseCompletionSource<bool>
     {
-        public Talk Talks { get; private set; }
+        public Talk Talk { get; private set; }
 
-        public TalkPhase(Talk talks)
+        public TalkPhase(Talk talk)
         {
-            Talks = talks;
+            Talk = talk;
         }
     }
 }

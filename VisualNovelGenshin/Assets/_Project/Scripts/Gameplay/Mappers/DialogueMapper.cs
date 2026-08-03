@@ -21,8 +21,10 @@ namespace Project.Gameplay.Scripts.Mappers
                 var storyPath = data.StoryPaths[i];
                 
                 var talks = new Talk[storyPath.Talks.Length];
-                for (int j = 0; j < storyPath.Talks.Length; j++)
-                    talks[j] = new Talk(storyPath.Talks[j].Texts);
+                var storyPathTalks = storyPath.Talks;
+                
+                for (int j = 0; j < storyPathTalks.Length; j++)
+                    talks[j] = new Talk(storyPathTalks[j].Texts, storyPathTalks[j].ID);
 
                 var choices = new Choice(storyPath.Choice.Text);
                 var nextDialogueId = storyPath.NextDialogue ? storyPath.NextDialogue.ID : Guid.Empty;
@@ -30,7 +32,7 @@ namespace Project.Gameplay.Scripts.Mappers
                 storyPaths[i] = new StoryPath(choices, talks, nextDialogueId);
             }
             
-            return new Dialogue(storyPaths);
+            return new Dialogue(storyPaths, data.ID);
         }
     }
     

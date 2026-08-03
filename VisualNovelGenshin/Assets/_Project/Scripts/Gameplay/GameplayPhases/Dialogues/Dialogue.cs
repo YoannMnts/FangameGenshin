@@ -1,15 +1,18 @@
-﻿using Project.Core.Scripts.Mappers;
+﻿using System;
+using Project.Core.Scripts.Mappers;
 using Project.Gameplay.Scripts.GameplayPhases.StoryWayChoices;
 
 namespace Project.Gameplay.Scripts.GameplayPhases.Dialogues
 {
     public class Dialogue : IRuntime
     {
+        public readonly Guid id;
         public Choice[] Choices => GetChoices();
         
         public StoryPath[] StoryPaths {get; private set;}
-        public Dialogue(StoryPath[] storyPaths)
+        public Dialogue(StoryPath[] storyPaths, Guid id)
         {
+            this.id = id;
             StoryPaths = storyPaths;
         }
 
