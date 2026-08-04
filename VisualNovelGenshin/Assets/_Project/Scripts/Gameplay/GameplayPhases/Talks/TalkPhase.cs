@@ -6,9 +6,13 @@ namespace Project.Gameplay.Scripts.GameplayPhases.Talks
     {
         public Talk Talk { get; private set; }
 
-        public TalkPhase(Talk talk)
+        private readonly GameManager gameManager;
+        public TalkPhase(Talk talk, GameManager gameManager)
         {
+            this.gameManager = gameManager;
             Talk = talk;
+            
+            this.gameManager.talkHistoric.Store(Talk);
         }
     }
 }

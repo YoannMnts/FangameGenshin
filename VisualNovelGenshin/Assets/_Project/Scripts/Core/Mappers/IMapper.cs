@@ -3,10 +3,10 @@ using UnityEngine;
 
 namespace Project.Core.Scripts.Mappers
 {
-    public interface IMapper<in TData, TRuntime> 
+    public interface IMapper<in TData, TBehaviour> 
         where TData : IData 
-        where TRuntime : IRuntime
+        where TBehaviour : IBehaviour<TData>
     { 
-        Awaitable<TRuntime> Map(TData data, CancellationToken ct);
+        Awaitable<TBehaviour> Map(TData data, CancellationToken ct = default);
     }
 }

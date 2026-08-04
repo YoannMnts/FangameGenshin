@@ -6,8 +6,10 @@ namespace Project.Gameplay.Scripts.GameplayPhases.StoryWayChoices
     {
         public Choice[] Choices { get; private set; }
 
-        public ChooseStoryPathPhase(Choice[] choices)
+        private readonly GameManager gameManager;
+        public ChooseStoryPathPhase(Choice[] choices, GameManager gameManager)
         {
+            this.gameManager = gameManager;
             Choices = choices;
         }
     }

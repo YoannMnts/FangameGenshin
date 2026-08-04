@@ -12,7 +12,7 @@ namespace Project.Gameplay.Scripts.ProgressSaves
     {
         void IPhaseListener<RoutePhase>.OnPhaseBegin(RoutePhase phase)
         {
-            RouteID = phase.CurrentRoute.id;
+            RouteID = phase.CurrentRoute.ID;
         }
 
         void IPhaseListener<RoutePhase>.OnPhaseEnd(RoutePhase phase)
@@ -21,7 +21,7 @@ namespace Project.Gameplay.Scripts.ProgressSaves
 
         void IPhaseListener<DialoguePhase>.OnPhaseBegin(DialoguePhase phase)
         {
-            DialogueID = phase.Dialogue.id;
+            DialogueID = phase.Dialogue.ID;
         }
 
         void IPhaseListener<DialoguePhase>.OnPhaseEnd(DialoguePhase phase)
@@ -30,7 +30,7 @@ namespace Project.Gameplay.Scripts.ProgressSaves
 
         void IPhaseListener<TalkPhase>.OnPhaseBegin(TalkPhase phase)
         {
-            TalkID = phase.Talk.id;
+            TalkID = phase.Talk.ID;
         }
 
         void IPhaseListener<TalkPhase>.OnPhaseEnd(TalkPhase phase)

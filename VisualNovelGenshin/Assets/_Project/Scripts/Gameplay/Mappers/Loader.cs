@@ -7,25 +7,16 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace Project.Gameplay.Scripts.Mappers
 {
-    public class Loader<TData, TRuntime> : ILoader<TData, TRuntime>
+    public class Loader<TData> : ILoader<TData>
         where TData : IData
-        where TRuntime : IRuntime
-    {
-        public async Awaitable<TRuntime> LoadAsync<TMapper>(Guid key, CancellationToken ct = default) 
-            where TMapper : IMapper<TData, TRuntime>, new()
+    { 
+        public async Awaitable<TData> LoadAsync(Guid guid, CancellationToken ct = default)
         {
-            var result = await LoadAsync<TMapper>(key.ToString(), ct);
-            return result;
-        }
-        
-        public async Awaitable<TRuntime> LoadAsync<TMapper>(string key, CancellationToken ct) 
-            where TMapper : IMapper<TData, TRuntime>, new()
-        {
-            var mapper = new TMapper();
+            var key = guid.ToString();
             var handle = Addressables.LoadAssetAsync<TData>(key);
-
+            
             await handle.Task;
-    
+
             ct.ThrowIfCancellationRequested();
 
             if (handle.Status != AsyncOperationStatus.Succeeded)
@@ -35,10 +26,10 @@ namespace Project.Gameplay.Scripts.Mappers
                 return default;
             }
 
-            var runtime = await mapper.Map(handle.Result, ct);
+            var data = handle.Result;
             Addressables.Release(handle);
-
-            return runtime;
+            
+            return data;
         }
     }
 }

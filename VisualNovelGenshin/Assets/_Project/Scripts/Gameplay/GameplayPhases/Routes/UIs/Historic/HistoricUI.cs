@@ -34,7 +34,7 @@ namespace Project.Gameplay.Scripts.GameplayPhases.Routes.UIs.Historic
         {
             base.OnPhaseBegin(phase);
             
-            storyHistoric = phase.Historic;
+            storyHistoric = phase.;
             openButton.onClick.AddListener(OnOpen);
             closeButton.onClick.AddListener(OnClose);
         }

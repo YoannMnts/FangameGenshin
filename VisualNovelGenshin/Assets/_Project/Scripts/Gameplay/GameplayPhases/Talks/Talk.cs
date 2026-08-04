@@ -3,15 +3,15 @@ using Project.Core.Scripts.Mappers;
 
 namespace Project.Gameplay.Scripts.GameplayPhases.Talks
 {
-    public class Talk : IRuntime
+    public class Talk : IBehaviour
     {
-        public readonly Guid id;
+        public Guid ID { get; private set; }
         public string[] Texts { get; private set; }
         
         public Talk(string[] texts, Guid id)
         {
-            this.id = id;
             Texts = texts;
         }
+
     }
 }

@@ -9,14 +9,21 @@ namespace Project.Gameplay.Scripts.Mappers
 {
     public class RouteMapper : IMapper<RouteData, Route>
     {
-        private readonly Loader<DialogueData, Dialogue> dialogueLoader = new ();
+        public RouteMapper()
+        {
+            MapperBucket<RouteData, Route>.Add(this);
+        }
+        
+        private readonly Loader<DialogueData> dialogueLoader = new ();
+        private readonly DialogueMapper dialogueMapper = new ();
         public async Awaitable<Route> Map(RouteData data, CancellationToken ct)
         {
             var dialogues = new Dialogue[data.DaysFirstDialogue.Length];
             
             for (int i = 0; i < data.DaysFirstDialogue.Length; i++)
             {
-                dialogues[i] = await dialogueLoader.LoadAsync<DialogueMapper>(data.DaysFirstDialogue[i].ID.ToString(), ct);
+                var dialogueData = await dialogueLoader.LoadAsync(data.DaysFirstDialogue[i].ID, ct);
+                dialogues[i] = await dialogueMapper.Map(dialogueData, ct);
             }
             
             return new Route(dialogues, data.ID);

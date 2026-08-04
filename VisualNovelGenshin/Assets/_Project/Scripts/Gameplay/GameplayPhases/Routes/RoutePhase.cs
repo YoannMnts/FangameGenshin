@@ -13,22 +13,18 @@ namespace Project.Gameplay.Scripts.GameplayPhases.Routes
 {
     public class RoutePhase : IPhase<bool>
     {
-        public IEnumerable<Talk> Historic => talkStorage.GetStorage();
+        public bool RouteHasBeenDone => gameManager.routeStorage.Contains(CurrentRoute);
         
-        public bool RouteHasBeenDone => routeStorage.Contains(CurrentRoute.id);
         public Route CurrentRoute { get; private set; }
         
-        private readonly Storage<Guid> routeStorage;
-        private readonly Storage<Talk> talkStorage;
-        
+        private readonly GameManager gameManager;
         private readonly Loader<DialogueData, Dialogue> dialogueLoader;
         
-        public RoutePhase(Route currentRoute, Storage<Guid> routeStorage)
+        public RoutePhase(Route currentRoute, GameManager gameManager)
         {
-            this.routeStorage = routeStorage;
+            this.gameManager = gameManager;
             CurrentRoute = currentRoute;
             dialogueLoader = new ();
-            talkStorage = new ();
         }
 
         async Awaitable<bool> IPhase<bool>.Execute(CancellationToken token)
@@ -40,7 +36,7 @@ namespace Project.Gameplay.Scripts.GameplayPhases.Routes
                     
                 while (currentDialogue != null)
                 {
-                    var dialoguePhase = new DialoguePhase(currentDialogue, talkStorage);
+                    var dialoguePhase = new DialoguePhase(currentDialogue, gameManager);
                     var result = await dialoguePhase.Run();
 
                     if (result.value == Guid.Empty)
@@ -61,7 +57,6 @@ namespace Project.Gameplay.Scripts.GameplayPhases.Routes
         async Awaitable IPhase<bool>.Dispose(CancellationToken token)
         {
             await Awaitable.MainThreadAsync();
-            talkStorage.Dispose();
         }
     }
 }

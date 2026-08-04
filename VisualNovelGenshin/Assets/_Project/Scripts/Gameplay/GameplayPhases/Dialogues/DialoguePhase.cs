@@ -3,28 +3,28 @@ using System.Threading;
 using Helteix.Tools.Phases;
 using Project.Gameplay.Scripts.GameplayPhases.StoryWayChoices;
 using Project.Gameplay.Scripts.GameplayPhases.Talks;
-using Project.Gameplay.Scripts.Storage;
 using UnityEngine;
 
 namespace Project.Gameplay.Scripts.GameplayPhases.Dialogues
 {
     public class DialoguePhase : IPhase<Guid>
     {
-        private readonly Storage<Talk> storage;
         public Dialogue Dialogue { get; private set; }
     
+        private readonly GameManager gameManager;
+        
         private StoryPath currentStoryPath;
         private bool skipRequested;
         
-        public DialoguePhase(Dialogue dialogue, Storage<Talk> storage)
+        public DialoguePhase(Dialogue dialogue, GameManager gameManager)
         {
-            this.storage = storage;
+            this.gameManager = gameManager;
             Dialogue = dialogue;
         }
 
         async Awaitable<Guid> IPhase<Guid>.Execute(CancellationToken token)
         {
-            var choosePathPhase = new ChooseStoryPathPhase(Dialogue.Choices);
+            var choosePathPhase = new ChooseStoryPathPhase(Dialogue.Choices, gameManager);
             var result = await choosePathPhase.Run();
             var choice = result.value;
 
@@ -39,10 +39,8 @@ namespace Project.Gameplay.Scripts.GameplayPhases.Dialogues
                     break;
             
                 var talk = currentStoryPath.Talks[i];
-                var talkPhase = new TalkPhase(talk);
+                var talkPhase = new TalkPhase(talk, gameManager);
                 await talkPhase.Run();
-                
-                storage.Store(talk);
             }
         
             return currentStoryPath.NextDialogueID;
