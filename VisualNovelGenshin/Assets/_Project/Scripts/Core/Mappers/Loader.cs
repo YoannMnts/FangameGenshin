@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Threading;
-using Project.Core.Scripts.Mappers;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
-namespace Project.Gameplay.Scripts.Mappers
+namespace Project.Core.Scripts.Mappers
 {
     public class Loader<TData> : ILoader<TData>
         where TData : IData

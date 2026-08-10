@@ -9,9 +9,9 @@ using UnityEngine;
 
 namespace Project.Gameplay.Scripts.Mappers
 {
-    public class DialogueMapper : IMapper<DialogueData, Dialogue>
+    public class DialogueMapper : Mapper<DialogueData,Dialogue, DialogueMapper>
     {
-        public async Awaitable<Dialogue> Map(DialogueData data, CancellationToken ct)
+        public override async Awaitable<Dialogue> Map(DialogueData data, CancellationToken ct = default)
         {
             await Awaitable.MainThreadAsync();
             

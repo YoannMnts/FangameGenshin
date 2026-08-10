@@ -2,6 +2,7 @@
 using System.Threading;
 using Helteix.Tools.Phases;
 using Project.Core.Scripts.Datas;
+using Project.Core.Scripts.Mappers;
 using Project.Gameplay.Scripts.GameplayPhases.Routes;
 using Project.Gameplay.Scripts.GameplayPhases.Talks;
 using Project.Gameplay.Scripts.Mappers;
@@ -12,45 +13,48 @@ namespace Project.Gameplay.Scripts
 {
     public class GameManager : IDisposable
     {
-        public readonly DataStorage<RouteData> routeStorage;
-        public readonly DataStorage<TalkData> talkHistoric;
+        public bool RouteHasBeenDone => RouteDoneStorage.Contains(currentRoute);
+
         
-        private readonly Loader<RouteData> routeLoader;
-        private readonly RouteMapper routeMapper;
+        public DataStorage<RouteData, Route> RouteDoneStorage { get; private set; }
+        public DataStorage<TalkData, Talk> TalkHistoric { get; private set; }
+        
         
         private readonly CancellationToken ct;
+        
+        private Route currentRoute;
 
         public GameManager(CancellationToken ct)
         {
-            routeStorage = new ();
-            talkHistoric = new ();
-            routeLoader = new ();
-            routeMapper = new ();
+            RouteDoneStorage = new ();
+            TalkHistoric = new ();
             this.ct = ct;
         }
         
         public async Awaitable LaunchRoute(RouteData data)
         {
-            var guid = data.ID;
-            var routeData = await routeLoader.LoadAsync(guid, ct);
-            var route = await routeMapper.Map(routeData, ct);
-
-            if (route == null)
+            if(MapperBucket<RouteData, Route>.TryGet(out var mapper))
             {
-                Debug.LogError($"Failed to load route: {guid.ToString()}");
+                currentRoute = await mapper.Map(data, ct);
+            }
+
+            if (currentRoute == null)
+            {
+                Debug.LogError($"Failed to load route: {data.ID.ToString()}");
                 return;
             }
             
-            var routePhase = new RoutePhase(route, this);
+            var routePhase = new RoutePhase(currentRoute, this);
             var result = await routePhase.Run();
             
             if(result.value)
-                routeStorage.Store(data);
+                RouteDoneStorage.Store(data);
         }
         
         public void Dispose()
         {
-            routeStorage?.Dispose();
+            RouteDoneStorage?.Dispose();
+            TalkHistoric?.Dispose();
         }
     }
 }

@@ -7,23 +7,20 @@ using UnityEngine;
 
 namespace Project.Gameplay.Scripts.Mappers
 {
-    public class RouteMapper : IMapper<RouteData, Route>
+    public class RouteMapper : Mapper<RouteData, Route, RouteMapper>
     {
-        public RouteMapper()
-        {
-            MapperBucket<RouteData, Route>.Add(this);
-        }
-        
-        private readonly Loader<DialogueData> dialogueLoader = new ();
-        private readonly DialogueMapper dialogueMapper = new ();
-        public async Awaitable<Route> Map(RouteData data, CancellationToken ct)
+        public override async Awaitable<Route> Map(RouteData data, CancellationToken ct = default)
         {
             var dialogues = new Dialogue[data.DaysFirstDialogue.Length];
+
+            if (!MapperBucket<DialogueData, Dialogue>.TryGet(out var mapper))
+            {
+                return null;
+            }
             
             for (int i = 0; i < data.DaysFirstDialogue.Length; i++)
             {
-                var dialogueData = await dialogueLoader.LoadAsync(data.DaysFirstDialogue[i].ID, ct);
-                dialogues[i] = await dialogueMapper.Map(dialogueData, ct);
+                dialogues[i] = await mapper.Map(data.DaysFirstDialogue[i], ct);
             }
             
             return new Route(dialogues, data.ID);

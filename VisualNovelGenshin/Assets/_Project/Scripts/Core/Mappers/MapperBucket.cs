@@ -9,6 +9,13 @@ namespace Project.Core.Scripts.Mappers
     {
         private static readonly Dictionary<Type, IMapper<TData, TBehaviour>> Mappers = new ();
 
+        public static void Add<TMapper>()
+            where TMapper : Mapper<TData, TBehaviour, TMapper>, new()
+        {
+            var mapper = new TMapper();
+            Add(mapper);
+        }
+        
         public static void Add<TMapper>(TMapper mapper) 
             where TMapper : IMapper<TData, TBehaviour>
         {

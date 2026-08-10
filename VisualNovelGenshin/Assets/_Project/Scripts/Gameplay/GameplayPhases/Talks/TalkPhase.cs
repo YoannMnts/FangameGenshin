@@ -12,7 +12,7 @@ namespace Project.Gameplay.Scripts.GameplayPhases.Talks
             this.gameManager = gameManager;
             Talk = talk;
             
-            this.gameManager.talkHistoric.Store(Talk);
+            this.gameManager.TalkHistoric.Store(Talk);
         }
     }
 }

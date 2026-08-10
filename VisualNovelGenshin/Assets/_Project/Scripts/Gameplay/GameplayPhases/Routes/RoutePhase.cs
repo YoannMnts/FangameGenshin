@@ -3,28 +3,26 @@ using System.Collections.Generic;
 using System.Threading;
 using Helteix.Tools.Phases;
 using Project.Core.Scripts.Datas;
+using Project.Core.Scripts.Mappers;
 using Project.Gameplay.Scripts.GameplayPhases.Dialogues;
 using Project.Gameplay.Scripts.GameplayPhases.Talks;
-using Project.Gameplay.Scripts.Mappers;
-using Project.Gameplay.Scripts.Storage;
 using UnityEngine;
 
 namespace Project.Gameplay.Scripts.GameplayPhases.Routes
 {
     public class RoutePhase : IPhase<bool>
     {
-        public bool RouteHasBeenDone => gameManager.routeStorage.Contains(CurrentRoute);
+        public IEnumerable<Talk> TalkHistoric => gameManager.TalkHistoric.GetBehaviours();
+        public bool RouteHasBeenDone => gameManager.RouteHasBeenDone;
+        
         
         public Route CurrentRoute { get; private set; }
         
         private readonly GameManager gameManager;
-        private readonly Loader<DialogueData, Dialogue> dialogueLoader;
-        
         public RoutePhase(Route currentRoute, GameManager gameManager)
         {
             this.gameManager = gameManager;
             CurrentRoute = currentRoute;
-            dialogueLoader = new ();
         }
 
         async Awaitable<bool> IPhase<bool>.Execute(CancellationToken token)
@@ -41,8 +39,10 @@ namespace Project.Gameplay.Scripts.GameplayPhases.Routes
 
                     if (result.value == Guid.Empty)
                         break;
-                        
-                    currentDialogue = await dialogueLoader.LoadAsync<DialogueMapper>(result.value, token);
+
+                    currentDialogue = MapperBucket<DialogueData, Dialogue>.TryGet(out var mapper)
+                        ? await mapper.LoadAndMap(result.value, token)
+                        : null;
                 }
             }
             
