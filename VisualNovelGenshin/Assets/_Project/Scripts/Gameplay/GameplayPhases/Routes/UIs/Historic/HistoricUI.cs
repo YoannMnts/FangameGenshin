@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Helteix.Tools.Phases.Listeners;
 using Project.Gameplay.Scripts.GameplayPhases.Dialogues;
 using Project.Gameplay.Scripts.GameplayPhases.Talks;
 using Project.Gameplay.Scripts.Utilities;
 using Sirenix.Utilities;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Project.Gameplay.Scripts.GameplayPhases.Routes.UIs.Historic
@@ -22,8 +24,9 @@ namespace Project.Gameplay.Scripts.GameplayPhases.Routes.UIs.Historic
         
         [SerializeField]
         private Button closeButton;
-        
-        private IEnumerable<Talk> storyHistoric;
+
+        private Awaitable<IEnumerable<Talk>> StoryHistoric => currentPhase.TalkHistoric;
+        private RoutePhase currentPhase;
 
         private void Awake()
         {
@@ -34,7 +37,7 @@ namespace Project.Gameplay.Scripts.GameplayPhases.Routes.UIs.Historic
         {
             base.OnPhaseBegin(phase);
             
-            storyHistoric = phase.TalkHistoric;
+            currentPhase = phase;
             openButton.onClick.AddListener(OnOpen);
             closeButton.onClick.AddListener(OnClose);
         }
@@ -43,29 +46,32 @@ namespace Project.Gameplay.Scripts.GameplayPhases.Routes.UIs.Historic
         {
             openButton.onClick.RemoveListener(OnOpen);
             closeButton.onClick.RemoveListener(OnClose);
-            storyHistoric = null;
+            currentPhase = null;
             
             base.OnPhaseEnd(phase);
         }
 
-        private void OnOpen()
+        private async void OnOpen()
         {
-            if (storyHistoric == null)
+            try
             {
-                Debug.LogError($"Historic is null");
-                return;
+                var talks = await currentPhase.TalkHistoric;
+                var texts = new List<string>();
+
+                foreach (var talk in talks)
+                    texts.AddRange(talk.Texts);
+    
+                group.Show();
+        
+                historicTextUIList.Connect(texts);
             }
             
-            group.Show();
-            
-            List<string> allText = new List<string>();
-            foreach (var story in storyHistoric)
+            catch (Exception e)
             {
-                allText.AddRange(story.Texts);
+                Debug.LogError(e);
             }
-            
-            historicTextUIList.Connect(allText);
         }
+        
         
         private void OnClose()
         {

@@ -22,7 +22,7 @@ MonoBehaviour:
       type: {class: ChoiceSelectorData, ns: Project.Core.Scripts.Datas, asm: Project.Core}
       data:
         <Choices>k__BackingField:
-        - <Text>k__BackingField: Commencer l'aventure !
+        - <ButtonText>k__BackingField: Commencer l'aventure !
           <StoryPathData>k__BackingField:
             <Talks>k__BackingField:
             - {fileID: 11400000, guid: 79ba16b64bf3144489025ada3151ff67, type: 2}

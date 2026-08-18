@@ -14,8 +14,6 @@ namespace Project.Gameplay.Scripts
     public class GameManager : IDisposable
     {
         public bool RouteHasBeenDone => RouteDoneStorage.Contains(currentRoute);
-        
-        
         public DataStorage<RouteData, Route> RouteDoneStorage { get; private set; }
         public DataStorage<TalkData, Talk> TalkHistoric { get; private set; }
         
@@ -27,7 +25,6 @@ namespace Project.Gameplay.Scripts
         public GameManager(CancellationToken ct)
         {
             RouteDoneStorage = new ();
-            TalkHistoric = new ();
             this.ct = ct;
         }
         
@@ -44,11 +41,15 @@ namespace Project.Gameplay.Scripts
                 return;
             }
             
+            TalkHistoric = new ();
+            
             var routePhase = new RoutePhase(currentRoute, this);
             var result = await routePhase.Run();
             
             if(result.value)
                 RouteDoneStorage.Store(data);
+            
+            TalkHistoric.Dispose();
         }
         
         public void Dispose()

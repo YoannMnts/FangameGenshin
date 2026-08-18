@@ -22,19 +22,19 @@ MonoBehaviour:
       type: {class: ChoiceSelectorData, ns: Project.Core.Scripts.Datas, asm: Project.Core}
       data:
         <Choices>k__BackingField:
-        - <Text>k__BackingField: A
+        - <ButtonText>k__BackingField: A
           <StoryPathData>k__BackingField:
             <Talks>k__BackingField:
             - {fileID: 11400000, guid: 1e5cd1158d2c7954fa6b6ab9f2b92c66, type: 2}
             - {fileID: 11400000, guid: e5d171c580640f74e8567c64db7029d8, type: 2}
             <NextDialogue>k__BackingField: {fileID: 0}
-        - <Text>k__BackingField: B
+        - <ButtonText>k__BackingField: B
           <StoryPathData>k__BackingField:
             <Talks>k__BackingField:
             - {fileID: 11400000, guid: 6af32850898fc4f438f07a1cf6b918d4, type: 2}
             - {fileID: 11400000, guid: e5d171c580640f74e8567c64db7029d8, type: 2}
             <NextDialogue>k__BackingField: {fileID: 0}
-        - <Text>k__BackingField: C
+        - <ButtonText>k__BackingField: C
           <StoryPathData>k__BackingField:
             <Talks>k__BackingField:
             - {fileID: 11400000, guid: 2c26b772e9d415c4591959940ffe9452, type: 2}

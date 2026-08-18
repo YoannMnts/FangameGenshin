@@ -14,9 +14,7 @@ namespace Project.Gameplay.Scripts.Mappers
             var dialogues = new Dialogue[data.DaysFirstDialogue.Length];
 
             if (!MapperBucket<DialogueData, Dialogue>.TryGet(out var mapper))
-            {
                 return null;
-            }
             
             for (int i = 0; i < data.DaysFirstDialogue.Length; i++)
             {

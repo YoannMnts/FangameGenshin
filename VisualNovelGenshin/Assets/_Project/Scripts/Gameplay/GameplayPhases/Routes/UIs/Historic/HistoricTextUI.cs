@@ -1,4 +1,5 @@
 ﻿using Helteix.Tools.UI;
+using Project.Gameplay.Scripts.GameplayPhases.Talks;
 using TMPro;
 using UnityEngine;
 

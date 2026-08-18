@@ -6,11 +6,10 @@ namespace Project.Gameplay.Scripts.GameplayPhases.StoryWayChoices
 {
     public class MiniGameSelector : IStoryPathSelector
     {
-        
-        
-        public Awaitable<StoryPath> SelectPath(StoryPath[] paths, GameManager gameManager, CancellationToken ct)
+        public async Awaitable<StoryPath> SelectPath(StoryPath[] paths, GameManager gameManager, CancellationToken ct)
         {
-            throw new System.NotImplementedException();
+            await Awaitable.MainThreadAsync();
+            return null;
         }
     }
 }

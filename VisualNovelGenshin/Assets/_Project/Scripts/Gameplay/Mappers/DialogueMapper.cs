@@ -15,6 +15,9 @@ namespace Project.Gameplay.Scripts.Mappers
         {
             await Awaitable.MainThreadAsync();
 
+            if (!MapperBucket<TalkData, Talk>.TryGet(out var talkMapper))
+                return null;
+            
             var storyPathDatas = data.StoryPathSelector.StoryPathDatas;
             var storyPaths = new StoryPath[storyPathDatas.Length];
 
@@ -26,7 +29,7 @@ namespace Project.Gameplay.Scripts.Mappers
                 
                 var storyPathTalks = storyPath.Talks;
                 for (int j = 0; j < storyPathTalks.Length; j++)
-                    talks[j] = new Talk(storyPathTalks[j].Texts, storyPathTalks[j].ID);
+                    talks[j] = await talkMapper.Map(storyPathTalks[j], ct);
 
                 var nextDialogueId = storyPath.NextDialogue ? 
                     storyPath.NextDialogue.ID : Guid.Empty;
@@ -42,7 +45,7 @@ namespace Project.Gameplay.Scripts.Mappers
                     for (int i = 0; i < choiceSelectorData.Choices.Length; i++)
                     {
                         var choiceData = choiceSelectorData.Choices[i];
-                        var choice = new Choice(choiceData.Text);
+                        var choice = new Choice(choiceData.ButtonText);
                         choices[i] = choice;
                     }
                     var choiceSelector = new ChoiceSelector(choices);

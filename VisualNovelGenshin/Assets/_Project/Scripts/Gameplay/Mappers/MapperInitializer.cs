@@ -7,8 +7,9 @@ namespace Project.Gameplay.Scripts.Mappers
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void Initialize()
         {
-            RouteMapper.Register();
+            TalkMapper.Register();
             DialogueMapper.Register();
+            RouteMapper.Register();
         }
     }
 }

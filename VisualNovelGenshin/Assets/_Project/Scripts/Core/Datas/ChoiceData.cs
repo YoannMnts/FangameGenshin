@@ -8,7 +8,7 @@ namespace Project.Core.Scripts.Datas
     {
         [field: SerializeField]
         [TextArea] 
-        public string Text { get; private set; }
+        public string ButtonText { get; private set; }
         
         [field: SerializeField]
         public StoryPathData StoryPathData { get; private set; }

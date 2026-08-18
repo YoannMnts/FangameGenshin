@@ -8,7 +8,7 @@ namespace Project.Core.Scripts.Datas
     {
         [field: SerializeField]
         public ChoiceData[] Choices { get; private set; }
-
+        
         public StoryPathData[] StoryPathDatas
         {
             get

@@ -12,9 +12,8 @@ namespace Project.Gameplay.Scripts.GameplayPhases.Routes
 {
     public class RoutePhase : IPhase<bool>
     {
-        public IEnumerable<Talk> TalkHistoric => gameManager.TalkHistoric.GetBehaviours();
+        public Awaitable<IEnumerable<Talk>> TalkHistoric => gameManager.TalkHistoric.GetBehaviours();
         public bool RouteHasBeenDone => gameManager.RouteHasBeenDone;
-        
         
         public Route CurrentRoute { get; private set; }
         

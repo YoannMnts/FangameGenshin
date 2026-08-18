@@ -31,11 +31,14 @@ namespace Project.Gameplay.Scripts.Storage
         public bool Contains(TData value) 
             => historic.Contains(value.ID);
 
-        public IEnumerable<TBehaviour> GetBehaviours()
+        public void Clear() 
+            => historic.Clear();
+
+        public async Awaitable<IEnumerable<TBehaviour>> GetBehaviours()
         {
             using (ListPool<TBehaviour>.Get(out var list))
             {
-                _ = GetBehaviours(list);
+                await GetBehaviours(list);
                 return list.ToArray();
             }
         }
