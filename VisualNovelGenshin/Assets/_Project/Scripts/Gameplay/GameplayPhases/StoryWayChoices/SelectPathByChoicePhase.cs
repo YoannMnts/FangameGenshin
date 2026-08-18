@@ -2,12 +2,12 @@
 
 namespace Project.Gameplay.Scripts.GameplayPhases.StoryWayChoices
 {
-    public class ChooseStoryPathPhase : PhaseCompletionSource<Choice>
+    public class SelectPathByChoicePhase : PhaseCompletionSource<Choice>
     {
         public Choice[] Choices { get; private set; }
 
         private readonly GameManager gameManager;
-        public ChooseStoryPathPhase(Choice[] choices, GameManager gameManager)
+        public SelectPathByChoicePhase(Choice[] choices, GameManager gameManager)
         {
             this.gameManager = gameManager;
             Choices = choices;

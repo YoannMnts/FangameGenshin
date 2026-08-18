@@ -14,7 +14,7 @@ namespace Project.Gameplay.Scripts
     public class GameManager : IDisposable
     {
         public bool RouteHasBeenDone => RouteDoneStorage.Contains(currentRoute);
-
+        
         
         public DataStorage<RouteData, Route> RouteDoneStorage { get; private set; }
         public DataStorage<TalkData, Talk> TalkHistoric { get; private set; }

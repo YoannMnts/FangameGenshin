@@ -13,10 +13,18 @@ MonoBehaviour:
   m_Name: Dialogue0
   m_EditorClassIdentifier: Project.Core::Project.Core.Scripts.Datas.DialogueData
   guidText: 4ab75f08-5c6e-4438-8765-4f7b77420cbf
-  <StoryPaths>k__BackingField:
-  - <Choice>k__BackingField:
-      <Text>k__BackingField: Commencer l'aventure
-    <Talks>k__BackingField:
-    - {fileID: 11400000, guid: 79ba16b64bf3144489025ada3151ff67, type: 2}
-    - {fileID: 11400000, guid: fbbc508ede9ed434394b1a41c352562e, type: 2}
-    <NextDialogue>k__BackingField: {fileID: 11400000, guid: fd3f0bc37df2a164086bd9bcc1f6a3e6, type: 2}
+  <StoryPathSelector>k__BackingField:
+    rid: 1442866438216613964
+  references:
+    version: 2
+    RefIds:
+    - rid: 1442866438216613964
+      type: {class: ChoiceSelectorData, ns: Project.Core.Scripts.Datas, asm: Project.Core}
+      data:
+        <Choices>k__BackingField:
+        - <Text>k__BackingField: Commencer l'aventure !
+          <StoryPathData>k__BackingField:
+            <Talks>k__BackingField:
+            - {fileID: 11400000, guid: 79ba16b64bf3144489025ada3151ff67, type: 2}
+            - {fileID: 11400000, guid: fbbc508ede9ed434394b1a41c352562e, type: 2}
+            <NextDialogue>k__BackingField: {fileID: 11400000, guid: fd3f0bc37df2a164086bd9bcc1f6a3e6, type: 2}

@@ -10,6 +10,6 @@ namespace Project.Gameplay.Scripts.GameplayPhases.StoryWayChoices
         public Choice(string text)
         {
             Text = text;
-        } 
+        }
     }
 }

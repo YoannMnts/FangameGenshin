@@ -8,41 +8,14 @@ namespace Project.Gameplay.Scripts.GameplayPhases.Dialogues
     public class Dialogue : IBehaviour<DialogueData>
     {
         public Guid ID { get; private set; }
-        public Choice[] Choices => GetChoices();
-        
         public StoryPath[] StoryPaths {get; private set;}
-        public Dialogue(StoryPath[] storyPaths, Guid id)
+        public IStoryPathSelector StoryPathSelector { get; private set; }
+        
+        public Dialogue(StoryPath[] storyPaths, IStoryPathSelector storyPathSelector, Guid id)
         {
             ID = id;
             StoryPaths = storyPaths;
-        }
-
-        public bool TryFindStoryPath<TChoice>(TChoice choice, out StoryPath storyPath) 
-            where TChoice : Choice
-        {
-            for (int i = 0; i < StoryPaths.Length; i++)
-            {
-                if (StoryPaths[i].Choice != choice) 
-                    continue;
-                
-                storyPath = StoryPaths[i];
-                return true;
-            }
-            
-            storyPath = null;
-            return false;
-        }
-
-        private Choice[] GetChoices()
-        {
-            var choices = new Choice[StoryPaths.Length];
-            for (var i = 0; i < StoryPaths.Length; i++)
-            {
-                var storyPath = StoryPaths[i];
-                choices[i] = StoryPaths[i].Choice;
-            }
-            
-            return choices;
+            StoryPathSelector = storyPathSelector;
         }
     }
 }

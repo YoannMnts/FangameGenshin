@@ -24,14 +24,12 @@ namespace Project.Gameplay.Scripts.GameplayPhases.Dialogues
 
         async Awaitable<Guid> IPhase<Guid>.Execute(CancellationToken token)
         {
-            var choosePathPhase = new ChooseStoryPathPhase(Dialogue.Choices, gameManager);
-            var result = await choosePathPhase.Run();
-            var choice = result.value;
-
-            if (!Dialogue.TryFindStoryPath(choice, out var storyPath)) 
+            var selectPath = await Dialogue.StoryPathSelector.SelectPath(Dialogue.StoryPaths, gameManager, token);
+            
+            if (selectPath == null) 
                 return Guid.Empty;
 
-            currentStoryPath = storyPath;
+            currentStoryPath = selectPath;
         
             for (int i = 0; i < currentStoryPath.Talks.Length; i++)
             {

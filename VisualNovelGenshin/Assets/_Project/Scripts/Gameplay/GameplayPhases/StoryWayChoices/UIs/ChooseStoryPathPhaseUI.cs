@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Project.Gameplay.Scripts.GameplayPhases.StoryWayChoices.UIs
 {
-    public class ChooseStoryPathPhaseUI : MonoPhaseListener<ChooseStoryPathPhase>
+    public class ChooseStoryPathPhaseUI : MonoPhaseListener<SelectPathByChoicePhase>
     {
         [SerializeField]
         private StoryPathChoiceUIList storyPathChoiceUIList;
@@ -12,27 +12,27 @@ namespace Project.Gameplay.Scripts.GameplayPhases.StoryWayChoices.UIs
         [SerializeField] 
         private CanvasGroup group;
 
-        private ChooseStoryPathPhase currentStoryPathPhase;
+        private SelectPathByChoicePhase currentPathPhase;
 
         private void Awake()
         {
             group.Hide();
         }
 
-        protected override void OnPhaseBegin(ChooseStoryPathPhase storyPathPhase)
+        protected override void OnPhaseBegin(SelectPathByChoicePhase pathByChoicePhase)
         {
-            base.OnPhaseBegin(storyPathPhase);
+            base.OnPhaseBegin(pathByChoicePhase);
             
-            currentStoryPathPhase = storyPathPhase;
-            var choices = storyPathPhase.Choices;
+            currentPathPhase = pathByChoicePhase;
+            var choices = pathByChoicePhase.Choices;
             
             group.Show();
             storyPathChoiceUIList.Connect(choices);
         }
 
-        protected override void OnPhaseEnd(ChooseStoryPathPhase storyPathPhase)
+        protected override void OnPhaseEnd(SelectPathByChoicePhase pathByChoicePhase)
         {
-            base.OnPhaseEnd(storyPathPhase);
+            base.OnPhaseEnd(pathByChoicePhase);
             
             storyPathChoiceUIList.Disconnect();
             group.Hide();
@@ -40,7 +40,7 @@ namespace Project.Gameplay.Scripts.GameplayPhases.StoryWayChoices.UIs
 
         public void TakeChoice(Choice choice)
         {
-            currentStoryPathPhase.SetResult(choice);
+            currentPathPhase.SetResult(choice);
         }
     }
 }

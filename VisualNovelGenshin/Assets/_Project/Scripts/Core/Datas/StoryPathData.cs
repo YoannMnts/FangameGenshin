@@ -7,9 +7,6 @@ namespace Project.Core.Scripts.Datas
     public class StoryPathData
     {
         [field: SerializeField]
-        public ChoiceData Choice { get; private set; }
-        
-        [field: SerializeField]
         public TalkData[] Talks { get; private set; }
         
         [field: SerializeField]

@@ -7,7 +7,7 @@ namespace Project.Core.Scripts.Datas
     [CreateAssetMenu(fileName = "Dialogue", menuName = "Datas/Dialogue")]
     public class DialogueData : ScriptableData, IData
     {
-        [field: SerializeField]
-        public StoryPathData[] StoryPaths { get; private set; }
+        [field: SerializeReference]
+        public IStoryPathSelectorData StoryPathSelector { get; private set; }
     }
 }
